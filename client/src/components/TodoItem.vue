@@ -61,7 +61,7 @@ const toggleCompletion = async () => {
 <template>
   <div class="todo-item">
     <label class="checkbox-container">
-      <input type="checkbox" v-model="todo.completed" @change="toggleCompletion" />
+      <input type="checkbox" v-model="todo.completed" @click="toggleCompletion" />
       <span class="checkmark"></span>
     </label>
     <!-- <label><input type="checkbox" v-model="todo.completed" @change="toggleCompletion" /></label> -->
