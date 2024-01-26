@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import TodoItem from "./TodoItem.vue";
 import axios from "axios";
 import { Todo } from "../types/todo"; // Assuming you have a Todo interface
 import AddTodo from "./AddTodo.vue";
 
 const todos = ref<Todo[]>([]);
+const itemsLeft = computed(() => todos.value.length);
 
 onMounted(() => {
   fetchTodos();
@@ -54,6 +55,8 @@ const addTodo = () => {
           @onUpdate="handleUpdate"
         />
       </li>
+      <!-- Items left -->
+      <div class="items-left">{{ itemsLeft }} items left</div>
     </ul>
   </div>
 </template>
@@ -77,5 +80,16 @@ h1 {
   position: absolute;
   left: 40px;
   text-transform: uppercase;
+}
+
+.items-left {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--todo-item-color);
 }
 </style>
