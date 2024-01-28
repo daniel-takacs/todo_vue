@@ -33,17 +33,3 @@ const addNewTodo = async () => {
     </form>
   </div>
 </template>
-
-<style>
-.create-todo-container {
-  position: absolute;
-  bottom: 50px;
-  left: 17%;
-
-  input {
-    padding: 10px 40px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-}
-</style>

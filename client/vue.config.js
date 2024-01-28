@@ -12,7 +12,7 @@ module.exports = defineConfig({
     },
   },
 
-  chainWebpack: (config) => {
+/*   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
 
     svgRule.uses.clear();
@@ -20,5 +20,5 @@ module.exports = defineConfig({
     svgRule
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
-  },
+  }, */
 });

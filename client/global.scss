@@ -1,10 +1,158 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap');
 
+/* Variables */
+$mobile-width: 375px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+/* Base (Mobile-first) Styles */
 body {
     font-family: 'Josefin Sans', sans-serif;
+    height: 100vh;
 }
 
 input {
     font-family: "Josefin Sans", sans-serif;
     outline: none;
+    border: none;
+    width: 200px;
+}
+
+:root {
+    --background-color: hsl(0, 0%, 98%);
+    --text-color: hsl(235, 19%, 35%);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode {
+    background-color: hsl(235, 21%, 11%);
+    color: hsl(236, 33%, 92%);
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.header-container {
+    display: flex;
+    padding: 0 10px;
+}
+
+.mode {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+h1 {
+    color: white;
+    text-transform: uppercase;
+}
+
+.todo-list {
+    color: black;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    top: 20%;
+    transform: translateY(-20%);
+    max-width: 500px;
+}
+
+.items-left,
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin: 1em;
+    height: 50px;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.todo-item input[type="text"] {
+    border: none;
+    width: 100%;
+    padding: 10px;
+}
+
+.todo-item input.completed {
+    text-decoration: line-through;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: #FAFAFA;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #BDBDBD;
+}
+
+.checkbox-container input:checked~.checkmark {
+    background-color: #3A7CFF;
+    background-image: url('./src/assets/images/icon-check.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.create-todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 50px;
+    background-color: white;
+    max-width: 500px;
+    margin: 1em;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet Styles */
+@media (min-width: $tablet-width) {
+    .mode {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+/* Desktop Styles */
+@media (min-width: $desktop-width) {
+    .header {
+        height: 200px;
+    }
+
+    .todo-list {
+        transform: translateY(-13%);
+    }
+
 }

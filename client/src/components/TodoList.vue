@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, inject, onBeforeUnmount } from "vue";
 import TodoItem from "./TodoItem.vue";
 import axios from "axios";
 import { Todo } from "../types/todo"; // Assuming you have a Todo interface
@@ -7,9 +7,22 @@ import AddTodo from "./AddTodo.vue";
 
 const todos = ref<Todo[]>([]);
 const itemsLeft = computed(() => todos.value.length);
+const bgMobileLight = require("../assets/images/bg-mobile-light.jpg");
+const bgMobileDark = require("../assets/images/bg-mobile-dark.jpg");
+const bgDesktopLight = require("../assets/images/bg-desktop-light.jpg");
+const bgDesktopDark = require("../assets/images/bg-desktop-dark.jpg");
+const isDarkMode = inject("isDarkMode");
+const toggleDarkMode = inject("toggleDarkMode");
 
 onMounted(() => {
   fetchTodos();
+  window.addEventListener("resize", updateWindowWidth);
+  window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+  window.removeEventListener("resize", updateWindowWidth);
 });
 
 const fetchTodos = async () => {
@@ -38,16 +51,49 @@ const handleUpdate = (updatedTodo: string) => {
 const addTodo = () => {
   fetchTodos();
 };
+
+const handleResize = () => {
+  isDarkMode.value = isDarkMode.value;
+};
+// Reactive window width
+const windowWidth = ref(window.innerWidth);
+
+// Update windowWidth on window resize
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+const headerBgImage = computed(() => {
+  if (windowWidth.value >= 1024) {
+    // Desktop
+    return isDarkMode.value ? bgDesktopDark : bgDesktopLight;
+  } else {
+    // Mobile
+    return isDarkMode.value ? bgMobileDark : bgMobileLight;
+  }
+});
 </script>
 
 <template>
   <div>
     <div class="header">
-      <h1>Todo</h1>
-      <AddTodo @add="addTodo" />
-      <img src="../assets/images/bg-mobile-light.jpg" alt="Header Image" />
+      <img :src="headerBgImage" alt="Header Image" />
     </div>
     <ul class="todo-list">
+      <div class="header-container">
+        <h1>Todo</h1>
+        <div class="mode" @click="toggleDarkMode">
+          <img
+            :src="
+              isDarkMode
+                ? require('@/assets/images/icon-sun.svg')
+                : require('@/assets/images/icon-moon.svg')
+            "
+            alt="Mode Image"
+          />
+        </div>
+      </div>
+      <AddTodo @add="addTodo" />
       <li v-for="todo in todos" :key="todo._id">
         <TodoItem
           :todo="todo"
@@ -55,41 +101,7 @@ const addTodo = () => {
           @onUpdate="handleUpdate"
         />
       </li>
-      <!-- Items left -->
       <div class="items-left">{{ itemsLeft }} items left</div>
     </ul>
   </div>
 </template>
-
-<style lang="scss">
-.todo-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin: auto;
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-h1 {
-  color: white;
-  position: absolute;
-  left: 40px;
-  text-transform: uppercase;
-}
-
-.items-left {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding: 1em;
-  margin: 1em;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: var(--todo-item-color);
-}
-</style>
