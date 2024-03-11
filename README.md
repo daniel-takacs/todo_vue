@@ -14,7 +14,7 @@ The backend for this project is located at: [daniel-takacs/todo](https://github.
 
 ## Live Site
 
-Experience the live application here: [Full-Stack Todo Application](https://fullstack-todo-vue.netlify.app/)
+Experience the live application here: Currently not available
 
 ## Project setup
 
